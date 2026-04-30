@@ -1,0 +1,9 @@
+[[headers]]
+  for = "/*.ipa"
+  [headers.values]
+    Content-Type = "application/octet-stream"
+
+[[headers]]
+  for = "/*.plist"
+  [headers.values]
+    Content-Type = "application/xml"
