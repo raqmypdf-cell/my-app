@@ -14,7 +14,7 @@ workflows:
           fi
       - name: Build & Archive
         script: |
-          xcodebuild -workspace "*.xcworkspace" -scheme "MyApp" -configuration Release -sdk iphoneos -archivePath build/ios/archive.xcarchive archive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          xcodebuild -workspace "*.xcworkspace" -scheme "my-app" -configuration Release -sdk iphoneos -archivePath build/ios/archive.xcarchive archive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
       - name: Export IPA
         script: |
           mkdir -p build/ios/ipa
