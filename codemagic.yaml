@@ -1,23 +1,27 @@
 workflows:
-  ios-workflow:
-    name: iOS Build
+  capacitor-ios-build:
+    name: Capacitor iOS Build
     max_build_duration: 60
     instance_type: mac_mini_m1
     environment:
+      node: latest
       xcode: latest
       cocoapods: default
     scripts:
-      - name: Install Dependencies
+      - name: Install Node & Sync
         script: |
-          if [ -f "Podfile" ]; then
-            pod install
-          fi
-      - name: Build & Archive
+          npm install
+          npx cap sync ios
+      - name: Install Pods
         script: |
-          xcodebuild -workspace "*.xcworkspace" -scheme "my-app" -configuration Release -sdk iphoneos -archivePath build/ios/archive.xcarchive archive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          cd ios/App && pod install && cd ../..
+      - name: Build Archive
+        script: |
+          # نستخدم المسار الصحيح لمشاريع Capacitor ونغير الاسم لـ App
+          xcodebuild -workspace "ios/App/App.xcworkspace" -scheme "App" -configuration Release -sdk iphoneos -archivePath build/ios/archive.xcarchive archive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
       - name: Export IPA
         script: |
           mkdir -p build/ios/ipa
-          xcodebuild -exportArchive -archivePath build/ios/archive.xcarchive -exportPath build/ios/ipa -exportOptionsPlist exportOptions.plist || xcodebuild -exportArchive -archivePath build/ios/archive.xcarchive -exportPath build/ios/ipa
+          xcodebuild -exportArchive -archivePath build/ios/archive.xcarchive -exportPath build/ios/ipa
     artifacts:
       - build/ios/ipa/*.ipa
