@@ -7,14 +7,16 @@ workflows:
       node: latest
       xcode: latest
       cocoapods: default
-      scripts:
+    scripts:
       - name: Install & Sync iOS
         script: |
           npm install
-          # يتأكد من وجود منصة ios ثم يزامن الملفات
-          npx cap add ios || npx cap sync iose
+          npx cap add ios || npx cap sync ios
+      - name: Install CocoaPods
         script: |
-          # نستخدم المسار الصحيح لمشاريع Capacitor ونغير الاسم لـ App
+          cd ios/App && pod install && cd ../..
+      - name: Build & Archive
+        script: |
           xcodebuild -workspace "ios/App/App.xcworkspace" -scheme "App" -configuration Release -sdk iphoneos -archivePath build/ios/archive.xcarchive archive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
       - name: Export IPA
         script: |
