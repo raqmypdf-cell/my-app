@@ -8,14 +8,14 @@ workflows:
       xcode: latest
       cocoapods: default
     scripts:
-      - name: Install & Sync iOS
+      - name: Install & Sync
         script: |
           npm install
           npx cap add ios || npx cap sync ios
-      - name: Install CocoaPods
+      - name: Install Pods
         script: |
           cd ios/App && pod install && cd ../..
-      - name: Build & Archive
+      - name: Build Archive
         script: |
           xcodebuild -workspace "ios/App/App.xcworkspace" -scheme "App" -configuration Release -sdk iphoneos -archivePath build/ios/archive.xcarchive archive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
       - name: Export IPA
