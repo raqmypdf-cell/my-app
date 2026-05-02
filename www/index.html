@@ -1,39 +1,30 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر التطبيقات الخاص بي</title>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f0f2f5; text-align: center; padding: 20px; margin: 0; }
-        .card { background: white; max-width: 400px; margin: 20px auto; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        img { width: 100px; height: 100px; border-radius: 20px; margin-bottom: 10px; }
-        h1 { font-size: 22px; margin: 10px 0; color: #333; }
-        p { color: #666; font-size: 14px; margin-bottom: 20px; }
-        .btn { display: inline-block; background: #007aff; color: white; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; font-size: 16px; transition: 0.3s; }
-        .btn:hover { background: #0056b3; transform: scale(1.05); }
-        .note { font-size: 12px; color: #888; margin-top: 20px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>مدارس دار الفكر</title>
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #f8f9fa; }
+    .loader { display: flex; justify-content: center; align-items: center; height: 100%; font-family: system-ui, -apple-system, sans-serif; color: #495057; font-size: 16px; }
+  </style>
+  <script>
+    // 🔗 رابط موقعك
+    const TARGET_URL = "https://fikr.edu.sa/main/fikr-portals/?lang=ar";
+    
+    // التحويل المباشر (الأفضل والأكثر استقراراً للـ WebView)
+    window.location.replace(TARGET_URL);
+  </script>
 </head>
 <body>
-
-    <div class="card">
-        <!-- يمكنك تغيير صورة الأيقونة هنا -->
-        <img src="https://cdn-icons-png.flaticon.com/512/3669/3669966.png" alt="App Icon">
-        
-        <h1>اسم التطبيق هنا</h1>
-        <p>الإصدار 1.0 | الحجم: يعتمد على الملف</p>
-        
-        <!-- رابط التثبيت السحري -->
-        <!-- تأكد أن اسم الملف في الرابط يطابق اسم ملف الـ plist الموجود لديك -->
-        <a href="itms-services://?action=download-manifest&url=https://creative-pixie-a63113.netlify.app/app.plist" class="btn">
-            ⬇️ تثبيت التطبيق
-        </a>
-    </div>
-
-    <div class="note">
-        <p>⚠️ افتح هذا الرابط من متصفح <b>Safari</b> على الآيفون.<br>يجب الثقة بالشهادة من الإعدادات بعد التثبيت.</p>
-    </div>
-
+  <div class="loader">جاري تحميل بوابة الفكر...</div>
+  <script>
+    // إخفاء شاشة التحميل بعد اكتمال التنقل أو بعد 2 ثانية كحد أقصى
+    window.addEventListener('load', () => {
+      const loader = document.querySelector('.loader');
+      if (loader) loader.style.display = 'none';
+    });
+    setTimeout(() => document.querySelector('.loader').style.display = 'none', 2000);
+  </script>
 </body>
 </html>
