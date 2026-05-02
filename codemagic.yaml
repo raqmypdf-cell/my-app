@@ -15,34 +15,21 @@ workflows:
       - name: Install Pods
         script: |
           cd ios/App && pod install && cd ../..
-      - name: Build Archive (No Sign)
+      - name: Build Archive
         script: |
-          # نبني بدون توقيع
           xcodebuild -workspace "ios/App/App.xcworkspace" -scheme "App" -configuration Release -sdk iphoneos -archivePath build/ios/archive.xcarchive archive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
-      - name: Export Unsigned IPA
+      - name: Package Valid IPA
         script: |
           mkdir -p build/ios/ipa
-          # نصدر بدون توقيع (هذي الطريقة تسمح بتصدير بدون شهادة)
-          xcodebuild -exportArchive -archivePath build/ios/archive.xcarchive -exportPath build/ios/ipa -exportOptionsPlist <(cat <<EOF
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-            <key>method</key>
-            <string>development</string>
-            <key>signingStyle</key>
-            <string>manual</string>
-            <key>teamID</key>
-            <string>0000000000</string>
-          </dict>
-          </plist>
-          EOF
-          ) || echo "Export failed, trying alternative method..."
-          # إذا فشل التصدير، نحاول طريقة بديلة
-          if [ ! -f build/ios/ipa/*.ipa ]; then
-            # نصنع IPA يدوياً من الـ .app
-            cd build/ios/archive.xcarchive/Products/Applications
-            zip -r ../../../ipa/App.ipa *.app
-          fi
+          # نسخ ملف التطبيق من الأرشيف
+          APP_PATH=$(find build/ios/archive.xcarchive/Products/Applications -name "*.app" -type d | head -n 1)
+          APP_NAME=$(basename "$APP_PATH" .app)
+          
+          # إنشاء هيكلية Payload الصحيحة التي يطلبها iOS
+          cd build/ios/archive.xcarchive/Products/Applications
+          mkdir -p Payload
+          cp -r "$APP_NAME.app" Payload/
+          zip -r ../../../ipa/"${APP_NAME}.ipa" Payload/
+          rm -rf Payload
     artifacts:
       - build/ios/ipa/*.ipa
