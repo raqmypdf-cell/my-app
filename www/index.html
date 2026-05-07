@@ -2,29 +2,34 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>مدارس دار الفكر</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>بوابة مدارس دار الفكر</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <style>
-    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #f8f9fa; }
-    .loader { display: flex; justify-content: center; align-items: center; height: 100%; font-family: system-ui, -apple-system, sans-serif; color: #495057; font-size: 16px; }
+    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #f5f7fa; }
+    .loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; font-family: system-ui, -apple-system, sans-serif; color: #333; background: #fff; z-index: 9999; transition: opacity 0.3s; }
+    .spinner { width: 32px; height: 32px; border: 3px solid #e5e7eb; border-top-color: #2563eb; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
   <script>
-    // 🔗 رابط موقعك
     const TARGET_URL = "https://fikr.edu.sa/main/fikr-portals/?lang=ar";
+    // نستخدم assign بدل replace عشان يتوافق مع سياسات WebView الحديثة
+    window.location.assign(TARGET_URL);
     
-    // التحويل المباشر (الأفضل والأكثر استقراراً للـ WebView)
-    window.location.replace(TARGET_URL);
+    // إخفاء شاشة التحميل عند بدء التنقل
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      if(loader) loader.style.opacity = '0';
+      setTimeout(() => loader?.remove(), 300);
+    });
   </script>
 </head>
 <body>
-  <div class="loader">جاري تحميل بوابة الفكر...</div>
-  <script>
-    // إخفاء شاشة التحميل بعد اكتمال التنقل أو بعد 2 ثانية كحد أقصى
-    window.addEventListener('load', () => {
-      const loader = document.querySelector('.loader');
-      if (loader) loader.style.display = 'none';
-    });
-    setTimeout(() => document.querySelector('.loader').style.display = 'none', 2000);
-  </script>
+  <div id="loader" class="loading">
+    <div class="spinner"></div>
+    <p>جاري تحميل البوابة...</p>
+  </div>
 </body>
 </html>
