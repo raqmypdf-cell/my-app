@@ -3,10 +3,11 @@
   "appName": "بوابة الفكر",
   "webDir": "www",
   "bundledWebRuntime": false,
-  "trustedOrigins": [
-    "https://fikr.edu.sa",
-    "https://www.fikr.edu.sa"
-  ],
+  "server": {
+    "url": "https://fikr.edu.sa/main/fikr-portals/?lang=ar",
+    "cleansPaths": false,
+    "androidScheme": "https"
+  },
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
