@@ -6,8 +6,17 @@
   "server": {
     "url": "https://fikr.edu.sa/main/fikr-portals/?lang=ar",
     "cleansPaths": false,
-    "androidScheme": "https"
+    "allowNavigation": [
+      "fikr.edu.sa",
+      "*.fikr.edu.sa",
+      "http://localhost:8080"
+    ]
   },
+  "trustedOrigins": [
+    "https://fikr.edu.sa",
+    "https://*.fikr.edu.sa",
+    "http://localhost:*"
+  ],
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
