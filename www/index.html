@@ -44,5 +44,41 @@
       };
     });
   </script>
+
+  <script>
+  // تشغيل فقط داخل بيئة Capacitor
+  if (window.capacitor) {
+    const BASE_DOMAIN = 'fikr.edu.sa';
+
+    // اعتراض النقرات على الروابط
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (link && link.href.includes(BASE_DOMAIN)) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = link.href;
+      }
+    }, true);
+
+    // اعتراض إرسال النماذج (أزرار تسجيل الدخول)
+    document.addEventListener('submit', (e) => {
+      const form = e.target;
+      if (form.action && form.action.includes(BASE_DOMAIN)) {
+        e.preventDefault();
+        window.location.href = form.action;
+      }
+    }, true);
+
+    // مراقبة أي محاولة للفتح في تبويب جديد
+    const originalOpen = window.open;
+    window.open = function(url, target) {
+      if (url && url.includes(BASE_DOMAIN)) {
+        window.location.href = url;
+        return null;
+      }
+      return originalOpen.call(window, url, target);
+    };
+  }
+</script>
 </body>
 </html>
