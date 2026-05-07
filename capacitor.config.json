@@ -9,12 +9,14 @@
     "allowNavigation": [
       "fikr.edu.sa",
       "*.fikr.edu.sa",
-      "http://localhost:8080"
+      "127.0.0.1",
+      "localhost"
     ]
   },
   "trustedOrigins": [
     "https://fikr.edu.sa",
     "https://*.fikr.edu.sa",
+    "http://127.0.0.1:*",
     "http://localhost:*"
   ],
   "plugins": {
