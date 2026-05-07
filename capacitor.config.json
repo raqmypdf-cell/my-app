@@ -1,6 +1,15 @@
 {
   "appId": "com.yourname.app",
-  "appName": "MyApp",
+  "appName": "بوابة الفكر",
   "webDir": "www",
-  "bundledWebRuntime": false
+  "bundledWebRuntime": false,
+  "trustedOrigins": [
+    "https://fikr.edu.sa",
+    "https://www.fikr.edu.sa"
+  ],
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
 }
