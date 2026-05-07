@@ -5,80 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>بوابة الفكر</title>
   <style>
-    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #f5f7fa; }
-    .loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; font-family: system-ui, sans-serif; color: #333; background: #fff; z-index: 9999; transition: opacity 0.3s; }
-    .spinner { width: 32px; height: 32px; border: 3px solid #e5e7eb; border-top-color: #2563eb; border-radius: 50%; animation: spin 0.8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    body, html { margin: 0; padding: 0; height: 100%; background: #f5f7fa; }
+    .loader { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #fff; z-index: 9999; font-family: system-ui, sans-serif; color: #333; }
   </style>
-  <script>
-    const TARGET_URL = "https://fikr.edu.sa/main/fikr-portals/?lang=ar";
-    window.location.replace(TARGET_URL);
-  </script>
 </head>
 <body>
-  <div id="loader" class="loading">
-    <div class="spinner"></div>
-    <p>جاري تحميل البوابة...</p>
-  </div>
+  <div id="loader" class="loader">جاري تحميل البوابة...</div>
 
-  <!-- 🔒 كود إجبار الروابط على البقاء داخل التطبيق -->
   <script>
-    // تشغيل قبل تحميل أي محتوى خارجي
-    window.addEventListener('DOMContentLoaded', () => {
-      // اعتراض جميع النقرات على الروابط التي تفتح في تبويب جديد
-      document.addEventListener('click', (e) => {
-        const link = e.target.closest('a[target="_blank"], a[target="_new"]');
-        if (link && link.href.startsWith('https://fikr.edu.sa')) {
-          e.preventDefault();
-          window.location.href = link.href;
-        }
-      }, true);
+    // التحويل الفوري للرابط الأساسي
+    window.location.replace("https://fikr.edu.sa/main/fikr-portals/?lang=ar");
+  </script>
 
-      // مراقبة أي نافذة جديدة تحاول الفتح وإغلاقها فوراً
-      window.open = function(url, target) {
-        if (target === '_blank' || target === '_new') {
+  <!-- 🔒 مراقب ذكي لاعتراض أي رابط أو زر يتم إضافته ديناميكياً -->
+  <script>
+    (function() {
+      const DOMAIN = 'fikr.edu.sa';
+
+      // دالة لفرض البقاء داخل التطبيق
+      function lockLinks() {
+        document.querySelectorAll('a, button, [role="button"], input[type="submit"]').forEach(el => {
+          const href = el.href || el.getAttribute('data-href') || '';
+          if (href.includes(DOMAIN)) {
+            el.removeAttribute('target'); // إزالة target="_blank"
+            el.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              window.location.href = href;
+            }, { once: true });
+          }
+        });
+      }
+
+      // مراقب للتغييرات الديناميكية في الصفحة
+      const observer = new MutationObserver(() => lockLinks());
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      // تشغيل مبدئي وإخفاء التحميل
+      window.addEventListener('load', () => {
+        lockLinks();
+        const loader = document.getElementById('loader');
+        if (loader) loader.style.display = 'none';
+      });
+
+      // اعتراض window.open القسري
+      const origOpen = window.open;
+      window.open = function(url) {
+        if (url && url.includes(DOMAIN)) {
           window.location.href = url;
           return null;
         }
-        return window.location.href = url;
+        return origOpen.call(window, url);
       };
-    });
+    })();
   </script>
-
-  <script>
-  // تشغيل فقط داخل بيئة Capacitor
-  if (window.capacitor) {
-    const BASE_DOMAIN = 'fikr.edu.sa';
-
-    // اعتراض النقرات على الروابط
-    document.addEventListener('click', (e) => {
-      const link = e.target.closest('a');
-      if (link && link.href.includes(BASE_DOMAIN)) {
-        e.preventDefault();
-        e.stopPropagation();
-        window.location.href = link.href;
-      }
-    }, true);
-
-    // اعتراض إرسال النماذج (أزرار تسجيل الدخول)
-    document.addEventListener('submit', (e) => {
-      const form = e.target;
-      if (form.action && form.action.includes(BASE_DOMAIN)) {
-        e.preventDefault();
-        window.location.href = form.action;
-      }
-    }, true);
-
-    // مراقبة أي محاولة للفتح في تبويب جديد
-    const originalOpen = window.open;
-    window.open = function(url, target) {
-      if (url && url.includes(BASE_DOMAIN)) {
-        window.location.href = url;
-        return null;
-      }
-      return originalOpen.call(window, url, target);
-    };
-  }
-</script>
 </body>
 </html>
