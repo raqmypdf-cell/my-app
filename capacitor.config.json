@@ -8,16 +8,12 @@
     "cleansPaths": false,
     "allowNavigation": [
       "fikr.edu.sa",
-      "*.fikr.edu.sa",
-      "127.0.0.1",
-      "localhost"
+      "*.fikr.edu.sa"
     ]
   },
   "trustedOrigins": [
     "https://fikr.edu.sa",
-    "https://*.fikr.edu.sa",
-    "http://127.0.0.1:*",
-    "http://localhost:*"
+    "https://*.fikr.edu.sa"
   ],
   "plugins": {
     "SplashScreen": {
