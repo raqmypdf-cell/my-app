@@ -2,7 +2,6 @@
   "appId": "com.fikr.portal",
   "appName": "بوابة الفكر",
   "webDir": "www",
-  "bundledWebRuntime": false,
   "server": {
     "url": "https://fikr.edu.sa/main/fikr-portals/?lang=ar",
     "cleansPaths": false,
@@ -11,22 +10,18 @@
       "*.fikr.edu.sa",
       "daralfikrgirls.com",
       "*.daralfikrgirls.com",
+      "daralfikrboys.com",
+      "*.daralfikrboys.com",
+      "portal.daralfikrgirls.com",
+      "results.daralfikrgirls.com",
       "http://*",
       "https://*"
-    ],
-    "androidScheme": "https"
+    ]
   },
   "trustedOrigins": [
     "https://fikr.edu.sa",
     "https://*.fikr.edu.sa",
     "https://daralfikrgirls.com",
     "https://*.daralfikrgirls.com"
-  ],
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0,
-      "showSpinner": true,
-      "spinnerColor": "#2563eb"
-    }
-  }
+  ]
 }
