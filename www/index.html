@@ -9,6 +9,25 @@
   </style>
 </head>
 <body>
-  <!-- لا تضع أي كود هنا، دع Capacitor يحمّل الموقع تلقائياً -->
+  <script>
+    // مراقبة جميع النقرات على الصفحة
+    document.addEventListener('click', (e) => {
+      const target = e.target.closest('a, button, [role="button"], .card, .tile');
+      if (target) {
+        const href = target.href || target.getAttribute('href') || target.getAttribute('data-href');
+        if (href) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.location.href = href;
+        }
+      }
+    }, true);
+
+    // منع فتح نوافذ جديدة
+    window.open = function(url) {
+      window.location.href = url;
+      return null;
+    };
+  </script>
 </body>
 </html>
