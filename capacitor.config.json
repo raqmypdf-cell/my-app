@@ -1,5 +1,5 @@
 {
-  "appId": "com.yourname.app",
+  "appId": "com.fikr.portal",
   "appName": "بوابة الفكر",
   "webDir": "www",
   "bundledWebRuntime": false,
@@ -8,12 +8,16 @@
     "cleansPaths": false,
     "allowNavigation": [
       "fikr.edu.sa",
-      "*.fikr.edu.sa"
+      "*.fikr.edu.sa",
+      "daralfikrgirls.com",
+      "*.daralfikrgirls.com"
     ]
   },
   "trustedOrigins": [
     "https://fikr.edu.sa",
-    "https://*.fikr.edu.sa"
+    "https://*.fikr.edu.sa",
+    "https://daralfikrgirls.com",
+    "https://*.daralfikrgirls.com"
   ],
   "plugins": {
     "SplashScreen": {
