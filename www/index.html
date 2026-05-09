@@ -4,60 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>بوابة الفكر</title>
-  <style>
-    body, html { margin: 0; padding: 0; height: 100%; background: #f5f7fa; }
-    .loader { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #fff; z-index: 9999; font-family: system-ui, sans-serif; color: #333; }
-  </style>
 </head>
-<body>
-  <div id="loader" class="loader">جاري تحميل البوابة...</div>
-
-  <script>
-    // التحويل الفوري للرابط الأساسي
-    window.location.replace("https://fikr.edu.sa/main/fikr-portals/?lang=ar");
-  </script>
-
-  <!-- 🔒 مراقب ذكي لاعتراض أي رابط أو زر يتم إضافته ديناميكياً -->
-  <script>
-    (function() {
-      const DOMAIN = 'fikr.edu.sa';
-
-      // دالة لفرض البقاء داخل التطبيق
-      function lockLinks() {
-        document.querySelectorAll('a, button, [role="button"], input[type="submit"]').forEach(el => {
-          const href = el.href || el.getAttribute('data-href') || '';
-          if (href.includes(DOMAIN)) {
-            el.removeAttribute('target'); // إزالة target="_blank"
-            el.addEventListener('click', (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              window.location.href = href;
-            }, { once: true });
-          }
-        });
-      }
-
-      // مراقب للتغييرات الديناميكية في الصفحة
-      const observer = new MutationObserver(() => lockLinks());
-      observer.observe(document.body, { childList: true, subtree: true });
-
-      // تشغيل مبدئي وإخفاء التحميل
-      window.addEventListener('load', () => {
-        lockLinks();
-        const loader = document.getElementById('loader');
-        if (loader) loader.style.display = 'none';
-      });
-
-      // اعتراض window.open القسري
-      const origOpen = window.open;
-      window.open = function(url) {
-        if (url && url.includes(DOMAIN)) {
-          window.location.href = url;
-          return null;
-        }
-        return origOpen.call(window, url);
-      };
-    })();
-  </script>
+<body style="margin:0; display:flex; align-items:center; justify-content:center; height:100vh; font-family:sans-serif; color:#555; background:#f8f9fa;">
+  <p>جاري تحميل البوابة...</p>
 </body>
 </html>
